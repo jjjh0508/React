@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <style>
+        /*
+            인라인 스타일 시트 방식에서 범주 주석만 가능하다
+            // 불가능
+        */
+    </style>
+    <title>Document</title>
+</head>
+<body>
+    <div id="root"></div>
+    <!-- html 내에서 주석 작성하는 방법은 일반적인 자바스크립트의 주석을 작성할 때와는 조금 다르다-->
+    <script type="text/babel">
+        // 스크립트 내부에서 한줄 주석
+        /*
+            javascript 여러줄 주석
+        */
+
+        const element = (
+            <>
+                <h3>
+                    Comment in jsx
+                </h3>
+                {/*범위 주석*/}
+                {
+                    //한줄 주석
+                    
+                }
+               
+                //안됨
+                /* 안됨 */
+                <h3 className ="text" //시작 태그에도 주석을 작성하는 것이 가능하다.
+                >
+                </h3>
+            </>
+        )
+
+
+        ReactDOM.createRoot(document.getElementById("root")).render(element);
+    </script>
+</body>
+</html>

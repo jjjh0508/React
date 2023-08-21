@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--react Home  -> 문서 -> 웹 사이트에 React 추가히기 -> 2단계에 있는 태그 -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/javascript">
+
+        /*
+            첫 번째 : 생성하고자 하는 엘리먼트 태그
+            두 번째 : 엘리먼트 속성
+            세 번째 : 자식 노드  
+        */
+        const greetingElement = React.createElement("h1",{className:"greeting",id:'greeting'}, 'hello world');
+
+        const textElemnet = React.createElement("h3",{id:"name"},"안녕하세요 호빵맨 입니다.");
+        
+
+        // const domContainer = document.getElementById("root");
+        // const root = ReactDOM.createRoot(domContainer);
+        // root.render(greetingElement);
+        /*
+            react 16버전 이전의 리액트는 하나의 엘리먼트만 렌더링 하는것이 가능하였으나
+            이후 버전에서는 배열을 랜더링 하는 것이 가능하도록 하였다.
+        */
+
+        ReactDOM.createRoot(document.getElementById("root")).render([greetingElement ,textElemnet]);
+    </script>
+</body>
+</html>

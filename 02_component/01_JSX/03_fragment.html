@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="root"></div>
+
+    <!--
+        jsx는 편리한 문법이나 몇가지 규칙을 준수해야한다.
+        동일 레벨의 노드들이 연달아 정의되는 경우 문법적 에러가 발생하게 된다.
+
+        여러 형제 레벨의 엘리먼트를 정의해야 하는 경우 하나의 부모 엘리멘트로(div태그와 같은)감까야하는데
+        div 요소 같은 실직적인 요소를 사용하지 않으려면 Fragment를 이용할 수 있다 (react 16이전 버전에 추가됨)
+
+    -->
+    <script type="text/babel">
+
+        const user = {
+            name: "gildong",
+            phone : '010-3232-3232'
+        };
+
+        // 최상위 엘리먼트 두개 이상하면 에러가 발생된다. jsx 문법에 어긋난다
+        // const element = (
+        //     <h1>안녕</h1>
+        //     <h1>하세요</h1>
+        // )
+
+        // 2. <div> 태그로 감싸서 하나의 돔 트리를 생성할 수 있도록 한다.
+        // const element = (
+        //        <div>
+        //         <h1> 안녕 {user.name}</h1>
+        //         <h1> phone {user.phone} </h1>
+        //         </div>
+        //  );
+
+        //3. <React.Fragment>로 감싸서 형식상의 돔 트리상 상위 엘리먼트를 만들어 준다.
+        // const element = (
+        //     <React.Fragment>
+        //         <h1> 안녕 {user.name}</h1>
+        //         <h1> phone {user.phone} </h1>
+        //     </React.Fragment>
+        // );
+
+        //4. React 라이브러리로 부터 Fragment 객체만 구조분해 할당을 해주면 React.를 생략할 수 있다.
+        // const {Fragment} = React;
+        // const {name , phone} = user;
+        // const element = (
+        //     <Fragment>
+        //         <h1>안녕 : {name+"님"}</h1>
+        //         <h1> phone : {phone} </h1>
+        //     </Fragment>
+        // )
+        const element = (
+            <>
+                <h1>안녕 : {user.name+"님"}</h1>
+                <h1> phone : {user.phone} </h1>
+            </>
+        )
+        
+
+        ReactDOM.createRoot(document.getElementById("root")).render(element);
+    </script>
+</body>
+</html>
