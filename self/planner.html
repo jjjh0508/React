@@ -12,13 +12,91 @@
 </head>
 
 <body>
+    <!--
+        전체적인 흐름
+        전역에
+        필요한 것들 React에서 가져오기
+        
+
+        Board안에 배열 , 추가하기 삭제하기 후 중간틀  정의 후 TodoList(배열 ,삭제하기) 호출 ->
+        TodoList에서 하나씩 출력해주는 CheckboxItem(배열에서  꺼낸 할일,삭제하기 ) 호출 ->
+        useState에서 checked와, setChecked 꺼내기
+        상태 체크하는 핸들러 정의, 스타일에 checked의 값에 따라 선 선택 해주기
+        답아온 할일에서 아이디랑 text 꺼내서 태그 만들어주기 
+
+        Board안에 삭제하기 <값 추가> 넣어서 호출
+         <Doinsert onInsert={onInsert}
+
+        
+    -->
     <div id="root"></div>
     <script type="text/babel">
 
-        const { useState, useRef, useCallback } = React;
+        const { useState, useRef, useCallback } = React; // 전역에 필요한 것들 가져옴 
+        //useRef  다시 랜더링 되어도 current 속성값을 유지
+        //useCallback  생성하고 싶은 함수,[배열 안의 값이 바뀌었을 때 함수가 새로 생성.
+        //특정 함수를 새로 만들지 않고 재사용하고 싶을 때 사용
+        //큰 틀 
+        function Board() {
+            const [todos, setTodos] = useState([
+            ]);
+            const textStyle = {
+                textAlign: "center",
+                margin: "10px",
+                color: "red"
+            }
+            const nextId = useRef(1); // 다시 랜더링 되어도 current 속성값을 유지
+            const onInsert = useCallback(   //useCallback 특정 함수를 새로 만들지 않고 재사용하고 싶을 때 사용
+                (text) => {
+                    const todo = {
+                        id: nextId.current,
+                        text
+                    };
+                    setTodos((todos) => todos.concat(todo));// concat 인자로 주어진 배열이나 값들을 기존 배열에 합쳐서 새배열 반환
+                    nextId.current++;
+                }, [todos]);
+            console.log(nextId);
+            //filter() 메서드는 주어진 함수의 테스트를 통과하는 모든 요소를 모아 새로운 배열로 반환합니다.
+            const onRemove = useCallback(
+                (id) => {
+                    setTodos(todos.filter((todo) => todo.id !== id));
+                }, [todos]
+            );
 
+            return (
+                <>
+                    <div style={{ width: 600, height: 500, border: '1px solid black', background: 'snow' }}>
+                        <div>
+                            <div style={{ width: 600, height: 400 }}>
+                                <h1 style={textStyle}>할일 리스트~~~~~</h1>
+                                <TodoList todos={todos} onRemove={onRemove} />
+                            </div>
+                        </div>
+                        <div>
+                            <Doinsert onInsert={onInsert} />
+                        </div>
+                    </div>
+                </>
+            );
+        }
+
+
+
+        // 값 받아서 리스트로 체크박스 있는 할일 여러번 호출 
+        function TodoList({ todos, onRemove }) {
+            return (
+                <ul className="TodoList">
+                    {todos.map((todo) => (
+                        //key를 안넘기면 에러 발생
+                        <CheckboxItem todo={todo} key={todo.id} onRemove={onRemove} />
+
+                    ))}
+                </ul>
+            );
+        }
         // 하나씩 그려지는 할일 
-        function CheckboxItem({ todo }) {
+        function CheckboxItem({ todo, onRemove }) {
+
             const [checked, setChecked] = useState(false);
 
             const checkHandler = ({ target }) => {
@@ -29,29 +107,16 @@
             };
             console.log(checked)
             const { id, text } = todo
+            console.log(id);
             return (
                 <div>
                     <input type="checkbox" checked={checked} onChange={({ target: { checked } }) => checkHandler(!checked)} />
                     <span style={style}>{text}</span>
-                    <button>삭제</button>
+                    <button style={{ marginLeft: "90%" }} onClick={() => onRemove(id)}>삭제</button>
                 </div>
             )
 
         }
-
-        // 값 받아서 리스트로 체크박스 있는 할일 여러번 호출 
-        function TodoList({ todos }) {
-            return (
-                <ul className="TodoList">
-                    {todos.map((todo) => (
-                        //key를 안넘기면 에러 발생
-                        <CheckboxItem todo={todo} key={todo.id} />
-
-                    ))}
-                </ul>
-            );
-        }
-
         // 값 추가
         function Doinsert({ onInsert }) {
             const [value, setValue] = useState('');
@@ -75,42 +140,6 @@
             )
 
 
-        }
-        //큰 틀 
-        function Board() {
-            const [todos, setTodos] = useState([
-            ]);
-            const textStyle = {
-                textAlign: "center",
-                margin: "10px",
-                color: "red"
-            }
-            const nextId = useRef(1); // 다시 랜더링 되어도 current 속성값을 유지
-            const onInsert = useCallback(   //useCallback 특정 함수를 새로 만들지 않고 재사용하고 싶을 때 사용
-                (text) => {
-                    const todo = {
-                        id: nextId.current,
-                        text
-                    };
-                    setTodos((todos) => todos.concat(todo));// concat 인자로 주어진 배열이나 값들을 기존 배열에 합쳐서 새배열 반환
-                    nextId.current++;
-                }, [todos]);
-            console.log(nextId);
-            return (
-                <>
-                    <div style={{ width: 600, height: 500, border: '1px solid black' }}>
-                        <div>
-                            <div style={{ width: 600, height: 400 }}>
-                                <h1 style={textStyle}>할일 리스트~~~~~</h1>
-                                <TodoList todos={todos} />
-                            </div>
-                        </div>
-                        <div>
-                            <Doinsert onInsert={onInsert} />
-                        </div>
-                    </div>
-                </>
-            );
         }
 
 
