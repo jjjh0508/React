@@ -20,7 +20,7 @@
             return <h1>안녕하세요 {props.name}</h1>
         }
 
-        Title.defaultProps={
+        Title.defaultProps={ // default 값 지정
             name:"기본"
         }
 
@@ -30,7 +30,7 @@
                 <Title name={name2}/>,
                 <Title name={name}/>,
                 <Title name="전달"/>,
-            
+                <Title/> // defaultProps
             ]
         )
     </script>
