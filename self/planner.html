@@ -18,7 +18,7 @@
         필요한 것들 React에서 가져오기
         
 
-        Board안에 배열 , 추가하기 삭제하기 후 중간틀  정의 후 TodoList(배열 ,삭제하기) 호출 ->
+        Board안에 배열 , 추가하기 삭제하기 후   정의 후 (중간틀)TodoList(배열 ,삭제하기) 호출 ->
         TodoList에서 하나씩 출력해주는 CheckboxItem(배열에서  꺼낸 할일,삭제하기 ) 호출 ->
         useState에서 checked와, setChecked 꺼내기
         상태 체크하는 핸들러 정의, 스타일에 checked의 값에 따라 선 선택 해주기
@@ -27,7 +27,19 @@
         Board안에 삭제하기 <값 추가> 넣어서 호출
          <Doinsert onInsert={onInsert}
 
-        
+         Board(){
+            배열
+            추가하기
+            삭제하기
+            중간틀(배열 삭제하기)
+         }
+
+         중간틀(){
+            map=>(작은단위(객체,삭제하기))
+            
+         }
+
+        렌더(<Board/>)
     -->
     <div id="root"></div>
     <script type="text/babel">
@@ -126,16 +138,21 @@
             //useCallback(생성하고 싶은 함수,[배열 안의 값이 바뀌었을 때 함수가 새로 생성됩니다.])
             const onSubmit = useCallback(
                 e => {
-                    onInsert(value);
-                    setValue(''); // value 초기화
-                    // 기본이벤트
-                    e.preventDefault();
+                    if (value.trim() == "") {
+                        alert("공백은 입력할 수 없습니다")
+                        e.preventDefault(); // 기본 이벤트 없이 alert를 사용하면 새로고침 된다
+                    } else {
+                        onInsert(value);
+                        setValue(''); // value 초기화
+                        // 기본이벤트
+                        e.preventDefault();
+                    }
                 }, [onInsert, value])
             console.log(value);
             return (         // html 태그 value 값 가져오는거 같음
                 <form className="Doinsert" onSubmit={onSubmit}>
-                    <input style={{ marginLeft: "20px", marginRight: "20px" }} onChange={onChange} value={value} placeholder="할일을 입력해주세요" />
-                    <button type="submit">추가하기</button>
+                    <input style={{ marginLeft: "3%", width: 400 }} onChange={onChange} value={value} placeholder="할일을 입력해주세요" />
+                    <button style={{ marginLeft: "10%" }} type="submit">추가하기</button>
                 </form>
             )
 
