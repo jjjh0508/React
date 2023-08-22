@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/prop-types@15.6/prop-types.min.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+
+        const { useState } = React;
+   
+
+        function Checkbox(todo) {
+            const [checked, setChecked] = useState(false);
+      
+
+
+            const checkHandler = ({ target }) => {
+                setChecked(!checked);
+            };
+            const style = {
+                textDecoration: checked ? 'line-through' : 'none'
+            };
+            console.log(checked)
+            const {text } = todo
+            return (
+                <div>
+                    <input type="checkbox" checked={checked} onChange={({ target: { checked } }) => checkHandler(!checked)} />
+                    <span style={style}>{text}</span>
+                    <button>삭제</button>
+                </div>
+            )
+
+        }
+        function TodoList({ todos }) {
+            return (
+                <ul className="TodoList">
+                    {todos.map((todo) => (
+                        <
+                            Checkbox todo={todo}
+                        />
+                    ))}
+                </ul>
+            );
+        }
+
+    
+
+        function Board() {
+            const [todos, setTodos] = useState([
+    {
+      id: 1,
+      text: '리액트 기초 알아보기',
+      checked: true,
+    },
+    {
+      id: 2,
+      text: '컴포넌트 스타일링 하기',
+      checked: true,
+    },
+    {
+      id: 3,
+      text: '투두리스트 만들기',
+      checked: false,
+    },
+  ]);
+  
+ 
+            return (
+                <div style={{ width: 600, height: 500, border: '1px solid black' }}>
+                    <div>
+                        <TodoList todos={todos}/>
+                    </div>
+                </div>
+            );
+        }
+
+
+        ReactDOM.createRoot(document.getElementById("root")).render(<Checkbox/>);
+    </script>
+</body>
+
+</html>

@@ -15,6 +15,9 @@
         
         const {useState} = React;
 
+        function Ss(){
+            return <h1>이게 되나</h1>
+        }
         function Say() {
             console.log("state 확인");
             
@@ -37,6 +40,7 @@
                         <button onClick={onClickEnter}>입장</button>    
                         <button onClick={onClickLeaver}>퇴장</button>    
                     </div>
+                    {<Ss/>}
                     <div>
                         <button onClick={()=>{setBackgroundColor('black'); setColor('white')}}>기본배경</button>   
                         <button onClick={()=>{setBackgroundColor('white'); setColor('black')}}>반전배경</button>   
