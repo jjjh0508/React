@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/prop-types@15.6/prop-types.min.js"></script>
+
+    <title>Document</title>
+</head>
+<body>
+    <!--
+        성능상으로 별로 큰 차이가 없지만 가독성을 위해 컴포넌트 내부 함수로 이벤트 핸들러 메소드를 분리 후에
+        render 함수안에서는 미리 선언된 함수를 사용하는걸로 render함수의 가동성을 향상시키는것이 가능하다
+        이벤트 핸들러에서 실행할 내용이 많을 수록 가독성은 더 좋아진다
+    -->
+    <div id="root"></div>
+    <script type="text/babel">
+        const {useState} = React;
+        //1. 구조 분해할당 es6
+        //2. usestate : hooks의 일종으로 컴포넌트에서 값을 관리하기 위해서 사용하는 것
+        //3. hooks가 뭔지  => 리액트의 라이프 사이클에 맞춰 주기 위해서 function형 컴포넌트에서 사용하는 기능
+        // react 라이프 사이클
+
+        function LoginComponet(){
+            const[username, setUsername] = useState('');
+            const[password, setPassword] = useState('');
+
+
+            const onChangeUserName = e => setUsername(e.target.value);
+            const onChangePassword = e => setPassword(e.target.value);
+            const onClickHandler =() =>{
+                alert(`username:${username}\n password : ${password}`);
+                setUsername('');
+                setPassword('');
+            }
+
+            return(
+                <>
+                    <h1> 로그인 </h1>
+                    <labal>아이디 </labal>
+                    <input
+                        type ="text"
+                        name ="username"
+                        placeholder ="아이디를 입력하세요"
+                        value={username}
+                        onChange={onChangeUserName}/>
+                    <labal>비밀번호 : </labal>
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder="비밀번호를 입력해주세요"
+                        value={password}
+                        onChange={onChangePassword} />
+                    <button onClick={onClickHandler}>로그인</button>
+                </>
+            );
+        }
+
+
+        ReactDOM.createRoot(document.getElementById("root")).render(<LoginComponet/>)
+    </script>
+</body>
+</html>

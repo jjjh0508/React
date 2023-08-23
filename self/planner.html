@@ -51,6 +51,8 @@
         //큰 틀 
         function Board() {
             const [todos, setTodos] = useState([
+            {id :'',
+             text:''}
             ]);
             const textStyle = {
                 textAlign: "center",
@@ -116,19 +118,21 @@
             };
             const style = {
                 textDecoration: checked ? 'line-through' : 'none'
+                
             };
             console.log(checked)
             const { id, text } = todo
             console.log(id);
             return (
                 <div>
-                    <input type="checkbox" checked={checked} onChange={({ target: { checked } }) => checkHandler(!checked)} />
-                    <span style={style}>{text}</span>
-                    <button style={{ marginLeft: "90%" }} onClick={() => onRemove(id)}>삭제</button>
+                    <input  type="checkbox" checked={checked} onChange={({ target: { checked } }) => checkHandler(!checked)} />
+                    <span key={id} style={style}>{text}</span>
+                    <button  onClick={() => onRemove(id)}>삭제</button>
                 </div>
             )
 
         }
+
         // 값 추가
         function Doinsert({ onInsert }) {
             const [value, setValue] = useState('');
@@ -151,7 +155,7 @@
             console.log(value);
             return (         // html 태그 value 값 가져오는거 같음
                 <form className="Doinsert" onSubmit={onSubmit}>
-                    <input style={{ marginLeft: "3%", width: 400 }} onChange={onChange} value={value} placeholder="할일을 입력해주세요" />
+                    <input style={{ marginLeft: "3%", width: 400 }} onChange={onChange} value={value} placeholder="할일을 입력해주세요"/>
                     <button style={{ marginLeft: "10%" }} type="submit">추가하기</button>
                 </form>
             )
