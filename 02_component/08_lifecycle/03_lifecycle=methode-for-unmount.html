@@ -6,13 +6,38 @@
     <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
     <script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <script src="https://unpkg.com/prop-types@15.6/prop-types.min.js"></script>
+  
     <title>Document</title>
 </head>
 <body>
     <div id="root"></div>
+
+    <!--
+        언마운트(화면에서 dom 제거) 카테고리의 생명주기 메소드 componentwillUnmount 이며
+        언마운트시 호출된다.
+    -->
     <script type ="text/babel">
+        const root = ReactDOM.createRoot(document.getElementById("root"));
+
+        class Greeting extends React.Component{
+            render(){
+                return (
+                    <h1> Hellow world</h1>
+                )
+            }
+
+            componentWillUnmount(){
+                console.log("componentWillUnmount")
+            }
+
         
+        }
+
+        root.render(<Greeting/>);
+
+        window.setTimeout(()=>{
+            root.render(null);
+        },5000)
     </script>
 </body>
 </html>

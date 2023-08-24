@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        // const {useState} = React;
+
+        // function Conuter(){
+
+        //     const [state,setState]= useState({value:0});
+
+        //     return (
+        //         <>
+        //             <h1> count : {state.value}</h1>
+        //             <button onClick={()=> setState({value: state.value+1})}>+1</button>
+        //             <button onClick={()=> setState({value: state.value-1})}>-1</button>
+        //         </>
+        //     );
+        // }
+
+
+        const { useReducer } = React;
+        // 일반 자바스크립트의 함수
+        function reducer(state, action) {
+            switch (action.type) {
+                case 'DECREMENT':
+                    console.log("-1");
+                    return { value: state.value - 1 };
+                case 'INCREMENT':
+                console.log("+1");
+                    return { value: state.value + 1 };
+                default: return state;
+            }
+        }
+
+        function Conuter() {
+            // 초기값 , 함수 = useReducer (함수객체, 초기값)
+            const [state, dispatch] = useReducer(reducer, { value: 100000000000000 });
+
+            return (
+                <>
+                    <h1> count : {state.value}</h1>
+                    <button onClick={() => dispatch({type: "INCREMENT"})}>+1</button>
+                    <button onClick={() => dispatch({type: "DECREMENT"})}>-1</button>
+                </>
+            )
+        }
+
+        ReactDOM.createRoot(document.getElementById('root')).render(<Conuter />);
+    </script>
+</body>
+
+</html>

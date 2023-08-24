@@ -44,22 +44,26 @@
     <div id="root"></div>
     <script type="text/babel">
 
-        const { useState, useRef, useCallback } = React; // 전역에 필요한 것들 가져옴 
-        //useRef  다시 랜더링 되어도 current 속성값을 유지
+        const { useState, useRef, useCallback } = React; // 전역에 필요한 것들 가져옴
+        //useRef 저장공간 또는 DOM 요소에 접근하기 위해 사용되는 ReactHook이다
+        // current 프로퍼티로 전달된 인자로 초기화된 변경 가능한 ref 객체를 반환한다
+        //useRef  다시 랜더링 되어도 current 속성값을 유지 
+    
         //useCallback  생성하고 싶은 함수,[배열 안의 값이 바뀌었을 때 함수가 새로 생성.
-        //특정 함수를 새로 만들지 않고 재사용하고 싶을 때 사용
+        //특정 함수를  메모리에 저장해놓고 새로 만들지 않고 재사용하고 싶을 때 사용 
+        //메모이제이션 ->  컴퓨터 프로그램이 동일한 계산을 반복해야할때, 이전에 계산한 ㄱ밧을 메모리에 저장함으로 써 동일한 계산의 반복수행을 제거하여 프로그램 실행속도를 빠르게 함
         //큰 틀 
         function Board() {
             const [todos, setTodos] = useState([
-            {id :'',
-             text:''}
+            {id :'1',
+             text:'집가기'}
             ]);
             const textStyle = {
                 textAlign: "center",
                 margin: "10px",
                 color: "red"
             }
-            const nextId = useRef(1); // 다시 랜더링 되어도 current 속성값을 유지
+            const nextId = useRef(2); // 다시 랜더링 되어도 current 속성값을 유지
             const onInsert = useCallback(   //useCallback 특정 함수를 새로 만들지 않고 재사용하고 싶을 때 사용
                 (text) => {
                     const todo = {
