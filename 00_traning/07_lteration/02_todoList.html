@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <title>Document</title>
+</head>
+
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        const { useState, useRef , useCallback} = React;
+
+        function Job({ job, remove }) {
+            const [isOn, setIsOn] = useState(false);
+            const style = {
+                textDecoration: isOn ? "line-through" : "none"
+            }
+            const { key, text } = job
+            console.log(key);
+            return (
+                <>
+                    <input type="checkBox" onChange={() => { setIsOn(!isOn) }} />
+                    <span key={key} style={style}> {text}</span>
+                    <button onClick={() => remove(key)}>삭제 </button>
+                </>
+            )
+        }
+
+        function Flan({ work, remove }) {
+            console.log(work);
+            return (
+                <>
+                    {
+                     
+                        work.map((job) => (
+                            <div>
+                                <Job key={job.key} job={job} remove={remove} />
+                            </div>
+                        ))
+                    }
+                </>
+            )
+        }
+
+
+        function App() {
+            const [work, setWork] = useState([
+                { key: '1', text: '집가기' }
+            ]);
+            const [value , setValue] = useState('');
+            const nextId = useRef(2);
+
+            // const remove = useCallback(
+            //     (key) => {
+            //         setWork(work.filter((todo) => todo.key !== key));
+            //     }, [work]
+            // );
+
+            const remove = (key)=>{
+
+                setWork(work.filter((todo) => todo.key !== key));
+            }
+
+            const onChange =(e)=>{
+                setValue(e.target.value);
+            }
+           
+            const onInsert =(text)=>{
+                const todo = {
+                    key : nextId.current,
+                    text
+                };
+
+                setWork((work)=> work.concat(todo));
+                nextId.current++;
+            }
+            
+            const onSubmit = e=>{
+                if(value.trim()==''){
+                    alert("공백입니다");
+                    e.preventDefault('')
+                }else{
+                    onInsert(value);
+                    e.preventDefault('');
+                }
+            }
+
+            return (
+                <div>
+                    <h1>할일 리스트</h1>
+                    <Flan  work={work} remove={remove}/>
+                    <form className="Doinsert" onSubmit={onSubmit}>
+                    <input id="work" type='text' value={value} onChange={onChange}/>
+                    <button type="submit">입력하기 </button>
+                    </form>
+                </div>
+            )
+        }
+        ReactDOM.createRoot(document.getElementById('root')).render(<App/>)
+    </script>
+</body>
+
+</html>
