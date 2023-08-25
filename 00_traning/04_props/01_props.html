@@ -1,11 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <title>Document</title>
 </head>
+
 <body>
-    
+    <div id="root"></div>
+    <script type="text/babel">
+
+        const title = "집에가자";
+        const content = "집에가서 공부하기";
+        const footert = "잠을 자자";
+
+        class Title extends React.Component {
+            constructor(props){
+                super(props)
+            }
+
+            render() {
+                const { title } = this.props;
+
+                return (
+                    <div>
+                        <h1> {title} </h1>
+                    </div>
+                )
+            }
+        }
+
+
+        class Content extends React.Component {
+            constructor(props){
+                super(props)
+            }
+
+            render() {
+                const { content } = this.props;
+
+                return (
+                    <h3>{content}</h3>
+                )
+            }
+        }
+
+
+        class Footer extends React.Component {
+            constructor(props){
+                super(props)
+            }
+
+            render() {
+                const { footer } = this.props;
+                return (
+                    <h5>{footer}</h5>
+                )
+            }
+        }
+
+        class App extends React.Component {
+            
+            render() {
+
+                const { title, content, footer } = this.props
+                return (
+                    <>
+                        <Title title={title} />
+                        <Content content={content} />
+                        <Footer footer={footert} />
+                    </>
+                )
+            }
+        }
+
+
+        ReactDOM.createRoot(document.getElementById('root')).render(<App title={title} content={content} footer={footert}/>)
+    </script>
 </body>
+
 </html>
