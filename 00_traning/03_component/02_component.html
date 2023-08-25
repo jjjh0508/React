@@ -11,21 +11,14 @@
 <body>
     <div id="root"></div>
     <script type="text/babel">
-        function helloworld(hello){
-            return `${hello.world}`
+
+        function Helloworld(){
+            return (
+                <h1> hello world </h1>
+            )
         }
 
-        const hello = {
-            world : "hello world"
-        }
-
-        const element =(
-            <React.Fragment>
-                <h1 style={{display :"flex", justifyContent:"center" ,backgroundColor :'red' , color:'white'}} onClick={()=>alert('안녕')} className ="hello" id="hello"> {helloworld(hello)}</h1>
-            </React.Fragment>
-        )
-
-        ReactDOM.createRoot(document.getElementById('root')).render(element);
+        ReactDOM.createRoot(document.getElementById('root')).render(<Helloworld/>);
     </script>
 </body>
 </html>

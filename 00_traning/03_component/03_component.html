@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        class Title extends React.Component{
+            render(){
+                return(
+                    <h1>리액트 공부하기</h1>
+                )
+            }
+        }
+
+        class Content extends React.Component{
+            render(){
+                return(
+                    <h1>재미있어요</h1>
+                )
+            }
+        }
+
+        class Footer extends React.Component{
+            render(){
+                return(
+                    <p>빨리 하고 집에 가자</p>
+                )
+            }
+        }
+        
+
+        class App extends React.Component{
+            render(){
+                return(
+                    <div>
+                        <Title/>
+                        <Content/>
+                        <Footer/>
+                    </div>
+                )
+            }
+        }
+
+
+        ReactDOM.createRoot(document.getElementById('root')).render(<App/>)
+      
+    </script>
+</body>
+</html>
