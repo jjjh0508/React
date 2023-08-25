@@ -12,6 +12,12 @@
     <div id="root"></div>
     <script type="text/babel">
         const root = ReactDOM.createRoot(document.getElementById('root'));
+        const answer = parseInt(prompt("1.콜라(1000원) \n22.펩시(800원)"));
+
+
+        let element =(answer ===1) ?(<h1> 콜라 (1000원) </h1>) : (<h1> 펩시 (800원) </h1>)
+
+     root.render(element);
     </script>
 </body>
 </html>
