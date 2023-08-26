@@ -12,11 +12,12 @@ componentDidMount 혹은 componentDidUpdate 메소드를 이용하면 된다 </p
   </pre>
 
 <pre>useEffect는 기본적으로 마운트 된 시점과 업데이트 된 시점 두가지 모두 동작하게 된다
-마운트 될 때만 동작하고 업데이트 시에는 동작하지 않게 컨트롤  할 수 있다. </pre>
+마운트 될 때만 동작하고 업데이트 시에는 동작하지 않게 컨트롤  할 수 있다.
 
 1. useEffect(콜백함수 , [state]) state 변경마다
 2. useEffect(콜백함수,[]) 렌더링 시점 호출
 3. useEffect(콜백함수) 리렌더링마다
+ </pre>
    <br/>
 
 <pre>
