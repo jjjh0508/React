@@ -25,6 +25,7 @@
             각 카테고리별 동작하는 라이프 사이클 메소드의 흐름을 보며 하나씩 확인해 볼것이다.
             마운트 시
             constructor - > getDerivedStateFromProps = > render => componentDidMount 순으로 호출됨
+                생성됨       
       -->
 
     <script type="text/babel">
@@ -68,6 +69,7 @@
 
             //3. 리액트 엘리먼트를 가상돔으로 구성하고 실제 렌더트리까지 구성하는 시점에 호출되는 메소드
             render() {
+                
                 /*
                     랜더링 될 컴포넌트의 형태를 리액트 컴포넌트로 반환한다.`
                     라이플 사이클 메소드 중 유일한 필수 메소드이다.

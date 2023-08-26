@@ -13,30 +13,36 @@
 <body>
     <div id="root"></div>
     <script type="text/babel">
-        const { useState, useRef , useCallback} = React;
+        const { useState, useRef } = React;
 
-        function Job({ job, remove }) {
-            const [isOn, setIsOn] = useState(false);
+        function Job({ job ,remove}) {
+            
+            const [checked, setChecked] = useState(false);
+            const checkHandler = ({ target }) => {
+                setChecked(!checked);
+            };
             const style = {
-                textDecoration: isOn ? "line-through" : "none"
-            }
-            const { key, text } = job
-            console.log(key);
+                textDecoration: checked ? 'line-through' : 'none'
+                
+            };
+            const { id, text } = job
+            console.log(checked);
             return (
                 <>
-                    <input type="checkBox" onChange={() => { setIsOn(!isOn) }} />
-                    <span key={key} style={style}> {text}</span>
-                    <button onClick={() => remove(key)}>삭제 </button>
+                <input  type="checkbox" checked={checked} onChange={({ target: { checked } }) => checkHandler(!checked)} />
+                    <span key={id} style={style}> {text}</span>
+                    <button onClick={() => remove(id)}>삭제 </button>
+                    
                 </>
             )
         }
 
         function Flan({ work, remove }) {
             console.log(work);
+            
             return (
                 <>
                     {
-                     
                         work.map((job) => (
                             <div>
                                 <Job key={job.key} job={job} remove={remove} />
@@ -50,7 +56,7 @@
 
         function App() {
             const [work, setWork] = useState([
-                { key: '1', text: '집가기' }
+                { id: '1', text: '집가기'}
             ]);
             const [value , setValue] = useState('');
             const nextId = useRef(2);
@@ -61,9 +67,9 @@
             //     }, [work]
             // );
 
-            const remove = (key)=>{
-
-                setWork(work.filter((todo) => todo.key !== key));
+            const remove = (id)=>{
+                setWork(work.filter((todo) => todo.id !== id));
+                
             }
 
             const onChange =(e)=>{
@@ -72,7 +78,7 @@
            
             const onInsert =(text)=>{
                 const todo = {
-                    key : nextId.current,
+                    id : nextId.current,
                     text
                 };
 
@@ -86,6 +92,7 @@
                     e.preventDefault('')
                 }else{
                     onInsert(value);
+                    setValue('');
                     e.preventDefault('');
                 }
             }
