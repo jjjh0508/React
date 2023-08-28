@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script crossorigin src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        
+        const {useState, useEffect, useCallback} = React;
+
+        function App(){
+            const[number,setNumber] = useState(0);
+            const[toggle, setToggle] = useState(false);
+
+            //1. useCallback
+            //2.
+            //3. useCallback(callback , [])
+            const printNumber = useCallback(()=>{
+                console.log(`current number ${number}`)
+            },[number]); // 의존성 배열 자리에 빈 배열을 두게 되면 마운트 시점에 한번 지역변수 초기화를 
+                        // 위해 사용하고 나서 함수는 새롭게 정의되지 않는다.
+
+
+            useEffect(()=>{
+                console.log('printNumber 값 변화 인지됨');
+            },[printNumber])
+
+            return(
+                <>
+                    <input
+                        type='number'
+                        value={number}
+                        onChange = {e=> setNumber(e.target.value)
+                        }/>
+                        <button onClick={()=> setToggle(!toggle)}>{String(toggle)}</button>
+                        <button onClick={printNumber}>PrintNUmberState</button>
+                                        </>
+            )
+
+            
+        }
+        ReactDOM.createRoot(document.getElementById('root')).render(<App/>)
+    </script>
+</body>
+</html>
