@@ -19,41 +19,63 @@
 
         function Pokemon() {
             const [pokemons, setPokemons] = useState([{}])
-            const [koreaname ,setKoreaname] = useState([])
+            const [koreaname, setKoreaname] = useState([{}])
+
+
 
             useEffect(() => {
-                
-               
-                
-                fetch(`https://pokeapi.co/api/v2/pokemon?limit=151`)
-                    .then(response => response.json())
-                    .then(data => setPokemons(data.results.map((pokemon, index) => {
-                        return {
-                            name: pokemon.name,
-                            id: index + 1,
-                            image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index + 1}.png`
+                const fetchpokemonset = async () => {
+                    await fetch(`https://pokeapi.co/api/v2/pokemon?limit=151`)
+                        .then(response => response.json())
+                        .then(data => setPokemons(data.results.map((pokemon, index) => {
+                            return {
+                                name: koreanNames[index],
+                                id: index + 1,
+                                image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index + 1}.png`
+                            }
+                        })))
+                }
+
+                const urls = [];
+
+                for (let i = 0; i < 151; i++) {
+                    let url = `https://pokeapi.co/api/v2/pokemon-species/${i + 1}`;
+                    urls.push(url);
+                }
+                let koreanNames = [];
+                let requests = urls.map(url => fetch(url));
+
+                Promise.all(requests)
+                    .then((responses) => Promise.all(responses.map((res) => res.json())))
+                    .then((results) => {
+                        for (let result of results) {
+                            koreanNames.push(result.names[2].name);
+
                         }
-                    })))
+
+                        console.log(koreaname)
+                        fetchpokemonset();
+                    });
 
             }, [])
-            console.log(pokemons)
+
             return (
-               <ul>
+                <ul>
                     <PokemonList pokemons={pokemons} />
                 </ul>
             )
-            console.log(pokemons)
+
         }
 
-        function PokemonList({pokemons}) {
+        function PokemonList({ pokemons }) {
             return (
                 <>
 
                     {
                         pokemons.map(poke => (
                             <>
-                            <li key={poke.id}>{poke.name}</li>
-                            <img src={poke.image}/>
+                                <li key={poke.id}>{poke.name}</li>
+                                <img src={poke.image} />
                             </>
                         ))
                     }
