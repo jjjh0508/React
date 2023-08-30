@@ -53,13 +53,10 @@
                     .then((results) => {
                         for (let result of results) {
                             koreanNames.push(result.names[2].name);
-
                         }
-
                         console.log(koreaname)
                         fetchpokemonset();
                     });
-
             }, [])
 
             return (
